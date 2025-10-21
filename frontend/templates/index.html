@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Text Annotation Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🤖 AI Text Annotation Agent</h1>
+        <p>Powered by Google Gemini - Analyze text with AI and chat to refine annotations</p>
+      </header>
+
+      <!-- Mode Toggle -->
+      <div class="mode-toggle">
+        <button id="annotateMode" class="mode-btn active">📊 Annotate Mode</button>
+        <button id="chatMode" class="mode-btn">💬 Chat Mode</button>
+      </div>
+
+      <div class="main-content">
+        <!-- ANNOTATION MODE -->
+        <div id="annotationView" class="view-container">
+          <div class="input-section">
+            <h2>Input Text</h2>
+            <textarea
+              id="inputText"
+              placeholder="Paste or type your text here...
+
+Example:
+On October 21, 2025, at 14:30, at City General Hospital Emergency Department (ED), Karim Ullah, a 55-year-old male with a history of Asthma and Hypertension, presented after 12 hours of worsening shortness of breath (SOB) and wheezing. The patient is alert, oriented, speaking full sentences, and in no acute distress. Vital signs are stable: blood pressure 132/86 mmHg, heart rate 92 bpm, and oxygen saturation 92% on room air. Lung exam reveals slightly diminished breath sounds with mild end-expiratory wheezing; no accessory muscle use or cyanosis noted. Cardiac examination shows normal heart sounds (S1 and S2), no murmurs, and no jugular venous distension (JVD). The patient denies fever, chest pain, peripheral edema, or recent infections, and has no recent hospitalizations. He reports having lost his Albuterol inhaler 3 days ago. A chest X-ray was ordered, and initial Troponin levels are pending. Treatment was initiated with 2 grams of Magnesium Sulfate intravenously and Prednisone 40 mg by mouth daily."></textarea>
+
+            <div class="button-group">
+              <button id="annotateBtn" class="btn btn-primary">
+                <span class="btn-text">Annotate Text</span>
+                <span class="loader" style="display: none"></span>
+              </button>
+              <button id="clearBtn" class="btn btn-secondary">Clear</button>
+              <button id="exampleBtn" class="btn btn-secondary">Load Example</button>
+            </div>
+          </div>
+
+          <div class="output-section" id="outputSection" style="display: none">
+            <h2>Annotations</h2>
+
+            <div class="annotation-group">
+              <h3>📍 Named Entities</h3>
+              <div id="entitiesOutput" class="annotation-content"></div>
+            </div>
+
+            <div class="annotation-group">
+              <h3>💭 Sentiment Analysis</h3>
+              <div id="sentimentOutput" class="annotation-content"></div>
+            </div>
+
+            <div class="annotation-group">
+              <h3>🔑 Keywords</h3>
+              <div id="keywordsOutput" class="annotation-content"></div>
+            </div>
+
+            <div class="annotation-group">
+              <h3>🔗 Entity Relationships</h3>
+              <div id="relationshipsOutput" class="annotation-content"></div>
+            </div>
+
+            <div class="export-section">
+              <button id="exportBtn" class="btn btn-export">Export JSON</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAT MODE -->
+        <div id="chatView" class="view-container" style="display: none">
+          <div class="chat-layout">
+            <div class="chat-container">
+              <div class="chat-header">
+                <h2>💬 Chat with AI Agent</h2>
+                <button id="resetChatBtn" class="btn btn-small">Reset Chat</button>
+              </div>
+
+              <div class="chat-messages" id="chatMessages">
+                <div class="chat-message assistant">
+                  <div class="message-content">
+                    <strong>AI Agent:</strong> Hello! I'm your AI annotation assistant. You can:
+                    <ul>
+                      <li>Say "Analyze: [your text]" to get instant annotations</li>
+                      <li>Ask questions about entities, sentiment, or keywords</li>
+                      <li>Request modifications or deeper analysis</li>
+                      <li>Ask me to explain the results</li>
+                    </ul>
+                    Example: "Analyze: Apple Inc. launched iPhone 15 in California for $999"
+                  </div>
+                </div>
+              </div>
+
+              <div class="chat-input-container">
+                <textarea id="chatInput" placeholder="Type 'Analyze: [your text]' or ask me anything..." rows="3"></textarea>
+                <button id="sendChatBtn" class="btn btn-primary">
+                  <span class="btn-text">Send</span>
+                  <span class="loader" style="display: none"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Annotations Panel in Chat Mode -->
+            <div class="chat-annotations" id="chatAnnotations" style="display: none">
+              <h3>📊 Current Annotations</h3>
+
+              <div class="annotation-group-compact">
+                <h4>📍 Entities</h4>
+                <div id="chatEntitiesOutput" class="annotation-content-compact"></div>
+              </div>
+
+              <div class="annotation-group-compact">
+                <h4>💭 Sentiment</h4>
+                <div id="chatSentimentOutput" class="annotation-content-compact"></div>
+              </div>
+
+              <div class="annotation-group-compact">
+                <h4>🔑 Keywords</h4>
+                <div id="chatKeywordsOutput" class="annotation-content-compact"></div>
+              </div>
+
+              <div class="annotation-group-compact">
+                <h4>🔗 Relationships</h4>
+                <div id="chatRelationshipsOutput" class="annotation-content-compact"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="error-section" id="errorSection" style="display: none">
+          <div class="error-message"><strong>Error:</strong> <span id="errorMessage"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
